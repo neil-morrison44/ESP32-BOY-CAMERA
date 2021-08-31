@@ -10,6 +10,11 @@ Adafruit_SharpMem display(SHARP_SCK, SHARP_MOSI, SHARP_CS, 400, 240);
 #define BLACK 0
 #define WHITE 1
 
+#define WHITE_POINT 64
+#define BLACK_POINT 200
+
+#define SHADE_STEP ((BLACK_POINT - WHITE_POINT) / 5)
+
 void drawShadeSquare(int x, int y, int shade1, int shade2, int shade3, int shade4)
 {
   display.drawPixel(x, y, shade1);
@@ -21,19 +26,19 @@ void drawShadeSquare(int x, int y, int shade1, int shade2, int shade3, int shade
 
 void drawPixel(byte shade, int x, int y)
 {
-  if (shade < 52)
+  if ((shade - WHITE_POINT) < SHADE_STEP)
   {
     drawShadeSquare(x * 2, y * 2, BLACK, BLACK, BLACK, BLACK);
   }
-  else if (shade < (52 * 2))
+  else if ((shade - WHITE_POINT) < (SHADE_STEP * 2))
   {
     drawShadeSquare(x * 2, y * 2, BLACK, WHITE, BLACK, BLACK);
   }
-  else if (shade < (52 * 3))
+  else if ((shade - WHITE_POINT) < (SHADE_STEP * 3))
   {
     drawShadeSquare(x * 2, y * 2, BLACK, WHITE, BLACK, WHITE);
   }
-  else if (shade < (52 * 4))
+  else if ((shade - WHITE_POINT) < (SHADE_STEP * 4))
   {
     drawShadeSquare(x * 2, y * 2, BLACK, WHITE, WHITE, WHITE);
   }
